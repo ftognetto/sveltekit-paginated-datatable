@@ -29,7 +29,14 @@ export class PaginatedUrl {
 		}
 		let filters: Record<string, any> | undefined = undefined;
 		url.searchParams.forEach((value, key) => {
-			if (key !== 'page' && key !== 'limit' && key !== 'sort' && value !== '') {
+			if (
+				key !== 'page' &&
+				key !== 'limit' &&
+				key !== 'sort' &&
+				value !== '' &&
+				value !== 'undefined' &&
+				value !== 'null'
+			) {
 				if (!filters) {
 					filters = {};
 				}
