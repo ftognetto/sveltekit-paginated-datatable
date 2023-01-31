@@ -15,7 +15,6 @@ export class PaginatedUrl {
 		return paginatedUrl;
 	}
 	static toState(url: URL): PaginatedState {
-		debugger;
 		const page = Number.parseInt(url.searchParams.get('page') || '1');
 		const limit = Number.parseInt(url.searchParams.get('limit') || '20');
 		const sorts = url.searchParams.get('sort') || undefined;
