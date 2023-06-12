@@ -4,6 +4,8 @@
 
 	export let paginatedData: PaginatedData<any>;
 	export let paginationClass: string | undefined = undefined;
+	export let paginationItemClass: string | undefined = undefined;
+	export let paginationItemActiveClass: string | undefined = undefined;
 	$: currentPage = paginatedData.state.page;
 	$: count = paginatedData.count;
 	$: pageSize = paginatedData.state.limit;
@@ -39,7 +41,12 @@
 </script>
 
 <nav class={paginationClass}>
-	<a href={_href(currentPage - 1)} data-sveltekit-noscroll class:disabled={currentPage === 1}>
+	<a
+		href={_href(currentPage - 1)}
+		data-sveltekit-noscroll
+		class={paginationItemClass}
+		class:disabled={currentPage === 1}
+	>
 		<slot name="prev" {currentPage}>Previous</slot>
 	</a>
 
@@ -47,13 +54,17 @@
 		{#if typeof page === 'string'}
 			<slot name="ellipsis">...</slot>
 		{:else if page === currentPage}
-			<a href={_href(page)} data-sveltekit-noscroll>
+			<a
+				href={_href(page)}
+				class="{paginationItemClass} {paginationItemActiveClass}"
+				data-sveltekit-noscroll
+			>
 				<slot name="currentPage" {page}>
 					{page}
 				</slot>
 			</a>
 		{:else}
-			<a href={_href(page)} data-sveltekit-noscroll>
+			<a href={_href(page)} class={paginationItemClass} data-sveltekit-noscroll>
 				<slot name="page" {page}>
 					{page}
 				</slot>
@@ -63,6 +74,7 @@
 
 	<a
 		href={_href(currentPage + 1)}
+		class={paginationItemClass}
 		data-sveltekit-noscroll
 		class:disabled={currentPage === pageCount}
 	>

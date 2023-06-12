@@ -40,7 +40,15 @@ export class PaginatedUrl {
 				if (!filters) {
 					filters = {};
 				}
-				filters[key] = value;
+				if (Array.isArray(filters[key])) {
+					filters[key].push(value);
+				} else {
+					if (filters[key]) {
+						filters[key] = [filters[key], value];
+					} else {
+						filters[key] = value;
+					}
+				}
 			}
 		});
 		return {
