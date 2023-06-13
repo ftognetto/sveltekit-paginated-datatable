@@ -1,7 +1,5 @@
 <script lang="ts">
-	import { goto, invalidateAll } from '$app/navigation';
-	import { page } from '$app/stores';
-	import { PaginatedUrl, type PaginatedData } from './paginated_data';
+	import type { PaginatedData } from './paginated_data';
 	import PaginatedDatatablePagination from './paginated_datatable_pagination.svelte';
 	import { PaginatedDatatableShowOptions } from './paginated_datatable_show_options';
 
@@ -36,35 +34,14 @@
 	export let paginationContainerClass: string | undefined = undefined;
 	export let paginationClass: string | undefined = undefined;
 	export let paginationCountClass: string | undefined = undefined;
-	export let paginationCountBuilder: (paginatedData: PaginatedData<T>) => string = (state) =>
+	export let paginationCountBuilder: (paginatedData: PaginatedData<T>) => string = (
+		paginatedData
+	) =>
 		`Showing ${(paginatedData.state.page - 1) * paginatedData.state.limit + 1} to ${Math.min(
 			paginatedData.count,
 			(paginatedData.state.page - 1) * paginatedData.state.limit + paginatedData.state.limit
 		)} of ${paginatedData.count} results`;
-
-	/**
-	 * reload the page with the current state
-	 */
-	export const reload = async () => {
-		await invalidateAll();
-		goto(`${$page.url.pathname}?${PaginatedUrl.from(paginatedData.state)}`, { noScroll: true });
-	};
-	/**
-	 * let update a row from outside the component.
-	 * @param row the row to update
-	 * @param mapId the property of the row that this function will use to compare
-	 */
-	export const remap = (row: T, mapId: string) => {
-		// let update a row from outside the component.
-		// mapId is the property of the row that this function will use to compare
-		paginatedData.data = paginatedData.data.map((r) => {
-			if ((row as any)[mapId] === (r as any)[mapId]) {
-				return row;
-			} else {
-				return r;
-			}
-		});
-	};
+	export let ssr = true;
 </script>
 
 <div class={containerClass}>
@@ -115,7 +92,7 @@
 					{#if paginatedData.count >= 0}{paginationCountBuilder(paginatedData)}{/if}
 				</div>
 
-				<PaginatedDatatablePagination {paginatedData} {paginationClass}>
+				<PaginatedDatatablePagination {paginatedData} {paginationClass} {ssr} on:pageChange>
 					<slot name="pagination-prev" slot="prev" />
 					<slot name="pagination-ellipsis" slot="ellipsis" />
 					<slot name="pagination-next" slot="next" />
