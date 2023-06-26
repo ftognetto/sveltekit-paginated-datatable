@@ -88,6 +88,7 @@
 	<!-- if not ssr emit events instead of navigate -->
 	<nav class={paginationClass}>
 		<button
+			type="button"
 			on:click={() => dispatch('pageChange', { page: currentPage - 1 })}
 			class={paginationItemClass}
 			class:disabled={currentPage === 1}
@@ -100,6 +101,7 @@
 				<slot name="ellipsis">...</slot>
 			{:else if page === currentPage}
 				<button
+					type="button"
 					on:click={() => dispatch('pageChange', { page: Number.parseInt(`${page}`) })}
 					class="{paginationItemClass} {paginationItemActiveClass}"
 					data-sveltekit-noscroll
@@ -110,6 +112,7 @@
 				</button>
 			{:else}
 				<button
+					type="button"
 					on:click={() => dispatch('pageChange', { page: Number.parseInt(`${page}`) })}
 					class={paginationItemClass}
 					data-sveltekit-noscroll
@@ -122,6 +125,7 @@
 		{/each}
 
 		<button
+			type="button"
 			on:click={() => dispatch('pageChange', { page: currentPage + 1 })}
 			class={paginationItemClass}
 			data-sveltekit-noscroll
