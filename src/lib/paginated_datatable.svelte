@@ -89,7 +89,7 @@
 		<slot name="pagination" {paginatedData}>
 			<div class={paginationContainerClass}>
 				<div class={paginationCountClass}>
-					{#if paginatedData.count >= 0}{paginationCountBuilder(paginatedData)}{/if}
+					{#if paginatedData.count >= 0}{@html paginationCountBuilder(paginatedData)}{/if}
 				</div>
 
 				<PaginatedDatatablePagination {paginatedData} {paginationClass} {ssr} on:pageChange>

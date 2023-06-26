@@ -1,6 +1,6 @@
 {
 	"name": "sveltekit-paginated-datatable",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "Sveltekit Paginated Datatable",
 	"author": "fabriziotognetto <info@quantos.it>",
 	"repository": "github:ftognetto/sveltekit-paginated-datatable",
