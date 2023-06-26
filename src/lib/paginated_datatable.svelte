@@ -22,7 +22,7 @@
 	// Exported variables
 	type T = $$Generic;
 	export let paginatedData: PaginatedData<T>;
-
+	$: paginatedData = paginatedData;
 	export let showOptions: PaginatedDatatableShowOptions = new PaginatedDatatableShowOptions();
 	export let columns: { name: string; cssClass?: string }[] = [];
 
