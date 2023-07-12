@@ -1,7 +1,15 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import { createEventDispatcher } from 'svelte';
 	import { PaginatedUrl, type PaginatedData } from './paginated_data';
+
+	interface $$Slots {
+		prev: {};
+		next: {};
+		count: {};
+		ellipsis: {};
+		page: { page: string | number };
+		currentPage: { page: string | number };
+	}
 
 	export let paginatedData: PaginatedData<any>;
 	export let paginationClass: string | undefined = undefined;
@@ -16,8 +24,7 @@
 	$: count = paginatedData.count;
 	$: pageSize = paginatedData.state.limit;
 
-	const _href = (page: number) =>
-		`${$page.url.pathname}?${PaginatedUrl.from({ ...paginatedData.state, page })}`;
+	const _href = (page: number) => `?${PaginatedUrl.from({ ...paginatedData.state, page })}`;
 
 	$: pageCount = Math.floor(count / pageSize) + 1;
 	$: pages = paginate(currentPage, pageCount);

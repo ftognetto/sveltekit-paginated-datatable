@@ -33,6 +33,8 @@
 	export let paginationContainerClass: string | undefined = undefined;
 	export let paginationClass: string | undefined = undefined;
 	export let paginationCountClass: string | undefined = undefined;
+	export let paginationItemClass: string | undefined = undefined;
+	export let paginationItemActiveClass: string | undefined = undefined;
 	export let paginationCountBuilder: (paginatedData: PaginatedData<T>) => string = (
 		paginatedData
 	) =>
@@ -91,12 +93,23 @@
 					{#if paginatedData.count >= 0}{@html paginationCountBuilder(paginatedData)}{/if}
 				</div>
 
-				<PaginatedDatatablePagination {paginatedData} {paginationClass} {ssr} on:pageChange>
+				<PaginatedDatatablePagination
+					{paginatedData}
+					{paginationClass}
+					{paginationItemClass}
+					{paginationItemActiveClass}
+					{ssr}
+					on:pageChange
+				>
 					<slot name="pagination-prev" slot="prev" />
 					<slot name="pagination-ellipsis" slot="ellipsis" />
 					<slot name="pagination-next" slot="next" />
-					<slot name="pagination-page" slot="page" let:page {page} />
-					<slot name="pagination-currentPage" slot="currentPage" let:page {page} />
+					<svelte:fragment slot="page" let:page>
+						<slot name="pagination-page" {page} />
+					</svelte:fragment>
+					<svelte:fragment slot="currentPage" let:page>
+						<slot name="pagination-currentPage" {page} />
+					</svelte:fragment>
 				</PaginatedDatatablePagination>
 			</div>
 		</slot>
