@@ -38,27 +38,13 @@
 	export let paginationCountBuilder: (paginatedData: PaginatedData<T>) => string = (
 		paginatedData
 	) =>
-		`Showing ${(paginatedData.state.page - 1) * paginatedData.state.limit + 1} to ${Math.min(
-			paginatedData.count,
-			(paginatedData.state.page - 1) * paginatedData.state.limit + paginatedData.state.limit
-		)} of ${paginatedData.count} results`;
+		`Showing ${paginatedData.pagination.showingFrom} to ${paginatedData.pagination.showingTo} of ${paginatedData.count} results`;
 	export let ssr = true;
 </script>
 
 <div class={containerClass}>
 	<slot name="header" {paginatedData} />
-	{#if paginatedData.error}
-		<slot name="error" error={paginatedData.error}>
-			<tr>
-				<td colspan="100" class="p-0 m-0">
-					<div class="alert alert-danger rounded-0 m-0" role="alert">
-						Si è verificato un'errore
-						<br /><small class="text-muted">{paginatedData.error}</small>
-					</div>
-				</td>
-			</tr>
-		</slot>
-	{:else if paginatedData.count === 0}
+	{#if paginatedData.count === 0}
 		<slot name="empty">
 			<tr>
 				<td colspan="100" class=" text-center">
